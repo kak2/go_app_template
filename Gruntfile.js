@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
-		cfg: grunt.file.readJSON('./cfg.json'),
+		cfg: grunt.file.readJSON('./etc/cfg.json'),
 		clean: ['./bin/<%= cfg.appname %>Server'],
 
 		go: {
@@ -30,7 +30,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 
 	// Task declare
-	grunt.registerTask('default', ['clean','build']);
 	grunt.registerTask('build', ['go:build:myapp']); 
 	grunt.registerTask('run', ['shell:run']); 
+	grunt.registerTask('test', ['shell:run']); 
+
+	grunt.registerTask('default', ['clean','build','run']);
 };

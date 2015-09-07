@@ -1,6 +1,8 @@
 stage { "prepare":
   before => Stage["main"],
 }
+stage { "last":}
+Stage['main'] -> Stage['last']
 
 class setup {
   exec { "update-aptitude":
@@ -13,13 +15,11 @@ class grunt {
     	command => "/usr/local/bin/npm install grunt-cli -g",
   	}
 }
-
+include nodejs
+include golang
 class {
   "setup":
     stage => prepare;
-  "nodejs":
-  	version => 'stable';
   "grunt":
-    require => Class["nodejs"];
-  "golang":;
+    stage => last;
 }
